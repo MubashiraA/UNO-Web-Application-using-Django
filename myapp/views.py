@@ -177,7 +177,7 @@ class AnswerView(View):
 			# up_vote=up_vote,
 			# down_vote=down_vote
 			)
-		return redirect('anslist')
+		return redirect('index')
 
 class QuestionList(View):
 	template_name='qnlist.html'

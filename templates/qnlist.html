@@ -9,23 +9,22 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.4.1/css/mdb.min.css">
     <link rel="stylesheet" href='{% static "style.css" %}'>
 
-<body>
+<body style="background-color: antiquewhite;">
     <main>
-        </div>
         <!--MDB Cards-->
         <div class="container">
             <div class="justify-content-md-center">
                 {% for i in data %}  
                 
-                <div class="col-sm-5"><br>
+                <div class="col-sm-5-center"><br>
                     <div class="card mt-5">
                         {% if i.pic %}
                             <div class="view overlay hm-white-slight">
-                                <img src="{{i.pic.url}}" height="500px" width="500px" class="img-fluid" alt="photo">
+                                <center><img src="{{i.pic.url}}" height="300px" width="300px" class="img-fluid" alt="photo" ></center>
                             </div>
                         {% endif %}
                         <div class="card-body">
-                            <h4 class="card-title">{{i.qn}}</h4>
+                            <h4 class="card-title">Q : {{i.qn}}</h4>
                             <!-- <h5 class="card-text">{{i.answer}}</h5> -->
                             <button class="btn btn-success float-left"><a href="{% url 'addans' i.id %}" class="text-white">Add Answer</a></button> 
                             <button class="btn btn-success float-right"><a href="{% url 'answers' i.id %}" class="text-white"> View Answers</a></button>

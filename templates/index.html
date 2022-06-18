@@ -1,3 +1,4 @@
+{% load static %}
 <!doctype html>
 <html lang="en">
 
@@ -149,7 +150,7 @@
     {% if user.is_authenticated %}
 
     <!-- Question listing -->
-    <div class="w3l-homeblock2 py-5">
+    <div class="w3l-homeblock2 py-5" style="background-color: rgb(228, 233, 233);"">
         <div class="container py-lg-5 py-md-4">
             <!-- block -->
             <h3 class="section-title-left mb-4">Questions</h3>
@@ -169,20 +170,18 @@
                             <h5>{{i.qn}}</h5>
                             <p>
                                 <a href="{% url 'addans' i.id %}" class="text-blue">Add Answer</a>
-                                <a href="{% url 'answers' i.id %}" class="text-blue float-right"> View
-                                    Answers</a>
+                                <a href="{% url 'answers' i.id %}" class="text-blue float-right"> View Answers</a>
                             </p>
 
                             <div class="author align-items-center mt-3 mb-1">
                                 <img src="static/assets/images/a1.jpg" alt="" class="img-fluid rounded-circle" />
                                 <ul class="blog-meta">
                                     <li>
-                                        <a href="author.html">Isabella ava</a> </a>
+                                        <a href="{% static 'assets/images/avatar.png' %}">{{i.user}}</a>
                                     </li>
                                     <li class="meta-item blog-lesson">
-                                        <span class="meta-value"> July 13, 2020 </span>. <span
-                                            class="meta-value ml-2"><span class="fa fa-clock-o"></span> 1
-                                            min</span>
+                                        <span class="meta-value"> {{i.created_on.date}}</span>. <span
+                                            class="meta-value ml-2"><span class="fa fa-clock-o"></span>{{i.created_on.time}}</span>
                                     </li>
                                 </ul>
                             </div>

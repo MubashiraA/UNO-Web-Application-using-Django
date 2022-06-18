@@ -9559,7 +9559,7 @@ a.text-dark:hover, a.text-dark:focus {
   --primary-color: #5a67d8;
   --secondary-color: #463373;
   --font-color: #718096;
-  --bg-color: rgb(90 103 216 / 10%);
+  --bg-color: white;
   --heading-color: #2d3748;
   --border-radius: 6px;
   --border-radius-full: 15px;
@@ -9575,7 +9575,7 @@ a.text-dark:hover, a.text-dark:focus {
   --primary-color: #5a67d8;
   --secondary-color: #463373;
   --font-color: #b7b7b7;
-  --bg-color: #131617;
+  --bg-color: white;
   --heading-color: #eee;
   --border-color: rgba(255, 255, 255, 0.2);
   --nav-color: #fff;

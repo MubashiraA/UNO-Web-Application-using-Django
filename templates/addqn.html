@@ -1,36 +1,3 @@
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-  <title>addqn</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</head>
-<body>
-<div class="container">
-  <form method="POST" enctype="multipart/form-data">
-    {% csrf_token %} -->
-<!-- <label>Question</label><br>
-    {{form.qn}}<br>
-    <label>Category</label><br>
-    {{form.group}}<br>
-    <label>Image</label><br>
-    {{form.pic}}<br> -->
-<!-- {{form.as_p}}
-    <button class="btn btn-success">Submit</button> 
-  </form>
-</div>
-
-</body>
-</html> -->
-
-<!--
-Author: W3layouts
-Author URL: http://w3layouts.com
--->
 
 {% load static %}
 <!doctype html>
@@ -61,12 +28,6 @@ Author URL: http://w3layouts.com
       <nav class="navbar navbar-expand-lg navbar-light fill px-lg-0 py-0 px-sm-3 px-0">
         <a class="navbar-brand" href="index.html">
           <span class="fa fa-newspaper-o"></span> UNO</a>
-        <!-- if logo is image enable this   
-						<a class="navbar-brand" href="#index.html">
-							<img src="image-path" alt="Your logo" title="Your logo" style="height:35px;" />
-						</a> -->
-
-
         <button class="navbar-toggler collapsed" type="button" data-toggle="collapse"
           data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
           aria-label="Toggle navigation">
@@ -130,7 +91,7 @@ Author URL: http://w3layouts.com
       <div class="container">
         <div class="heading">
           <h3 class="category-title mb-3">Post Question</h3>
-          <p class="mb-md-5 mb-4">Please enter your quetions</p>
+          <p class="mb-md-5 mb-4">Please enter your quetion</p>
         </div>
         <div class="row">
           <div class="col-lg-8 form-inner-cont">
@@ -154,7 +115,7 @@ Author URL: http://w3layouts.com
               </div>
               <div class="form-input">
                 <label><h5> Upload image</h5></label>
-                <input type="file" name="pic" id="w3lMessage" required=""></input>
+                <input type="file" name="pic" id="w3lMessage"></input>
               </div>
               <div class="text-right">
                 <button class="btn btn-style btn-primary" type="submit">Submit</button>

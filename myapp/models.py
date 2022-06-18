@@ -23,6 +23,7 @@ class QuestionModel(models.Model):
 	def __str__(self):
 		return self.qn
 
+
 Approval=(
 	('approval','Approval'),
 	('pending','Pending'),

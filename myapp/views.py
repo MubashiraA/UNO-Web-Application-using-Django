@@ -10,8 +10,14 @@ from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.forms import AuthenticationForm
 from myapp.models import *
 # Create your views here.
-def index(request):
-    return render(request,'index.html')
+class index(View):
+	template_name='index.html'
+	def get(self,request):
+		qn_data=QuestionModel.objects.all()
+		context={'data':qn_data}
+		
+		return render(request,self.template_name,context)
+    
 
 def contact(request):
     return render(request,'contact.html')
@@ -180,18 +186,9 @@ class QuestionList(View):
 		context={'data':qn_data}
 		return render(request,self.template_name,context)
 
-class AnswerList(View):
-	template_name='anslist.html'
-	def get(self,request):
-		ans_data=AnswerModel.objects.all()
-		context={'data':ans_data}
-		return render(request,self.template_name,context)
-
 class Answers(View):
 	template_name='answers.html'
 	def get(self,request,pk):
 		data=QuestionModel.objects.get(id=pk)
 		answerdata=AnswerModel.objects.filter(qn=data)
-		
-		print(answerdata)
 		return render(request,self.template_name,{'answerdata':answerdata})

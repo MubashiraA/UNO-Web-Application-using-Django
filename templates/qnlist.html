@@ -1,26 +1,42 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>qnlist</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</head>
+  <title>quetion list</title>
+  <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.4.1/css/mdb.min.css">
+    <link rel="stylesheet" href='{% static "style.css" %}'>
+
 <body>
-<div class="container mt-3">
-      {% for i in data %}  
-      <div class="alert alert-success">
-        {{i.qn}}
-        <img src="{{i.pic.url}}" height="150px" width="150px">
-        <button class="btn btn-success float-right"><a href="{% url 'addans' i.id %}" class="text-white">Answer post</a></button> 
-        <button class="btn btn-success float-right"><a href="{% url 'answers' i.id %}" class="text-white">Answers</a></button> 
-
-    </div>
-
-  {% endfor %}  
-</div>
+    <main>
+        </div>
+        <!--MDB Cards-->
+        <div class="container">
+            <div class="justify-content-md-center">
+                {% for i in data %}  
+                
+                <div class="col-sm-5"><br>
+                    <div class="card mt-5">
+                        {% if i.pic %}
+                            <div class="view overlay hm-white-slight">
+                                <img src="{{i.pic.url}}" height="500px" width="500px" class="img-fluid" alt="photo">
+                            </div>
+                        {% endif %}
+                        <div class="card-body">
+                            <h4 class="card-title">{{i.qn}}</h4>
+                            <!-- <h5 class="card-text">{{i.answer}}</h5> -->
+                            <button class="btn btn-success float-left"><a href="{% url 'addans' i.id %}" class="text-white">Add Answer</a></button> 
+                            <button class="btn btn-success float-right"><a href="{% url 'answers' i.id %}" class="text-white"> View Answers</a></button>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}  
+            </div>
+        </div>
+    </main>
 </body>
 </html>
+
+

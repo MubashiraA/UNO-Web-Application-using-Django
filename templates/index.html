@@ -13,7 +13,7 @@
     <link href="//fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
 
     <!-- Template CSS -->
-    <link rel="stylesheet" href="static/assets/css/style-starter.css">
+    <link rel="stylesheet" href="{% static 'assets/css/style-starter.css' %}">
 </head>
 
 <body>
@@ -150,7 +150,7 @@
     {% if user.is_authenticated %}
 
     <!-- Question listing -->
-    <div class="w3l-homeblock2 py-5" style="background-color: rgb(228, 233, 233);"">
+    <div class="w3l-homeblock2 py-5" style="background-color: rgb(228, 233, 233);">
         <div class="container py-lg-5 py-md-4">
             <!-- block -->
             <h3 class="section-title-left mb-4">Questions</h3>
@@ -166,7 +166,7 @@
                             {% endif %}
                         </div>
                         <div class="card-body blog-details">
-                            <span class="label-blue">Beauty</span>
+                            <span class="label-blue">{{i.group}}</span>
                             <h5>{{i.qn}}</h5>
                             <p>
                                 <a href="{% url 'addans' i.id %}" class="text-blue">Add Answer</a>
@@ -174,10 +174,10 @@
                             </p>
 
                             <div class="author align-items-center mt-3 mb-1">
-                                <img src="static/assets/images/a1.jpg" alt="" class="img-fluid rounded-circle" />
+                                <img src="{% static 'assets\images\avatar.png '%}" alt="" class="img-fluid rounded-circle" />
                                 <ul class="blog-meta">
                                     <li>
-                                        <a href="{% static 'assets/images/avatar.png' %}">{{i.user}}</a>
+                                        <a href="{% url 'chatroom' i.user.id %}">{{i.user}}</a>
                                     </li>
                                     <li class="meta-item blog-lesson">
                                         <span class="meta-value"> {{i.created_on.date}}</span>. <span
@@ -582,20 +582,11 @@
                         </div>
                         <div class="col-lg-8 row">
                             <div class="col-sm-4 col-6 footer-list-28">
-                                <h6 class="footer-title-28">Useful links</h6>
-                                <ul>
-                                    <li><a href="#categories">food blogs</a></li>
-                                    <li><a href="#advertise">Advertise with us</a></li>
-                                    <li><a href="#authors">Our Authors</a></li>
-                                    <li><a href="contact.html">Get in touch</a></li>
-                                </ul>
-                            </div>
-                            <div class="col-sm-4 col-6 footer-list-28">
                                 <h6 class="footer-title-28">Categories</h6>
                                 <ul>
-                                    <li><a href="beauty.html">Beauty</a></li>
-                                    <li><a href="fashion.html">Fashion and Style</a></li>
-                                    <li><a href="#food"> Food and Wellness</a></li>
+                                    <li><a href="#">Education</a></li>
+                                    <li><a href="#">Travel</a></li>
+                                    <li><a href="#food"> Food </a></li>
                                     <li><a href="#lifestyle">Lifestyle</a></li>
                                 </ul>
                             </div>

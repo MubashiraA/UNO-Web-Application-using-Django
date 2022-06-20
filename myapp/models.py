@@ -54,3 +54,41 @@ class UserRegisterModel(models.Model):
 	def __str__(self):
 		return (self.user.first_name+" "+self.user.last_name)"""
 
+# chat
+class Message(models.Model):
+
+    sender = models.ForeignKey(User, related_name="sent_messages", on_delete=models.CASCADE)
+    receiver = models.ForeignKey(User, related_name="received_messages", on_delete=models.CASCADE)
+    message = models.TextField()
+    seen = models.BooleanField(default=False)
+    date_created = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return str(self.sender)
+
+# UpVotes
+class UpVote(models.Model):
+    answer=models.ForeignKey(AnswerModel,on_delete=models.CASCADE)
+    user=models.ForeignKey(User,on_delete=models.CASCADE)
+
+    def __str__(self):
+        return str(self.id)
+
+# DownVotes
+class DownVote(models.Model):
+    answer=models.ForeignKey(AnswerModel,on_delete=models.CASCADE)
+    user=models.ForeignKey(User,on_delete=models.CASCADE)
+
+    def __str__(self):
+        return str(self.id)
+
+#comment
+class Comment(models.Model):
+    answer=models.ForeignKey(AnswerModel,on_delete=models.CASCADE)
+    user=models.ForeignKey(User,on_delete=models.CASCADE)
+    comment=models.TextField(default='')
+    add_time=models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.comment
+

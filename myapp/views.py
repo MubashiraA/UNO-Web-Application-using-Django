@@ -9,6 +9,16 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.forms import AuthenticationForm
 from myapp.models import *
+from django.shortcuts import render, get_object_or_404
+from django.contrib.auth.decorators import login_required
+from django.http.response import JsonResponse
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib import messages
+from .models import User, Message
+from django.db.models import Q
+import json
+from django.http import JsonResponse
+
 # Create your views here.
 class index(View):
 	template_name='index.html'
@@ -191,4 +201,89 @@ class Answers(View):
 	def get(self,request,pk):
 		data=QuestionModel.objects.get(id=pk)
 		answerdata=AnswerModel.objects.filter(qn=data)
-		return render(request,self.template_name,{'answerdata':answerdata})
+		return render(request,self.template_name,{'answerdata':answerdata,'data':data})
+# chat
+@login_required
+def chatroom(request, pk:int):
+    other_user = get_object_or_404(User, pk=pk)
+    messages = Message.objects.filter(
+        Q(receiver=request.user, sender=other_user)
+    )
+    messages.update(seen=True)
+    messages = messages | Message.objects.filter(Q(receiver=other_user, sender=request.user))
+    return render(request, "chatroom.html", {"other_user": other_user, 'users': User.objects.all(), "user_messages": messages})
+
+
+@login_required
+def ajax_load_messages(request, pk):
+    other_user = get_object_or_404(User, pk=pk)
+    messages = Message.objects.filter(seen=False).filter(Q(receiver=request.user, sender=other_user))
+    # print("messages")
+
+    message_list = [{
+        "sender": message.sender.username,
+        "message": message.message,
+        "sent": message.sender == request.user,
+
+    } for message in messages]
+    messages.update(seen=True)
+    
+    if request.method == "POST":
+        message = json.loads(request.body)
+        
+        m = Message.objects.create(receiver=other_user, sender=request.user, message=message)
+        message_list.append({
+            "sender": request.user.username,
+            # "username": request.user.username,
+            "message": m.message,
+            "sent": True,
+        })
+    print(message_list)
+    return JsonResponse(message_list, safe=False)
+
+# Save Upvote
+def save_upvote(request):
+    if request.method=='POST':
+        answerid=request.POST['answerid']
+        answer=AnswerModel.objects.get(pk=answerid)
+        user=request.user
+        check=UpVote.objects.filter(answer=answer,user=user).count()
+        opp=DownVote.objects.filter(answer=answer,user=user).count()
+        if opp>0 or check > 0:
+            return JsonResponse({'bool':False})
+        else:
+            UpVote.objects.create(
+                answer=answer,
+                user=user
+            )
+            return JsonResponse({'bool':True})
+
+# Save Downvote
+def save_downvote(request):
+    if request.method=='POST':
+        answerid=request.POST['answerid']
+        answer=AnswerModel.objects.get(pk=answerid)
+        user=request.user
+        check=DownVote.objects.filter(answer=answer,user=user).count()
+        opp=UpVote.objects.filter(answer=answer,user=user).count()
+        if opp>0 or check > 0:
+            return JsonResponse({'bool':False})
+        else:
+            DownVote.objects.create(
+                answer=answer,
+                user=user
+            )
+            return JsonResponse({'bool':True})
+#comment
+def save_comment(request):
+    if request.method=='POST':
+        comment=request.POST['comment']
+        answerid=request.POST['answerid']
+        answer=Answers.objects.get(pk=answerid)
+        user=request.user
+        Comment.objects.create(
+            answer=answer,
+            comment=comment,
+            user=user
+        )
+        return JsonResponse({'bool':True})

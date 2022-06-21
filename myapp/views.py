@@ -100,7 +100,7 @@ class UserLogin(View):
 		if user is not None :
 			login(request,user)
 			if user.is_superuser == True and user.is_staff == True:
-				return redirect('index')
+				return redirect('dash')
 			if user.is_staff == True and user.is_superuser == False:
 				return redirect('index')
 			if user.is_staff == False and user.is_superuser == False:
@@ -279,7 +279,7 @@ def save_comment(request):
     if request.method=='POST':
         comment=request.POST['comment']
         answerid=request.POST['answerid']
-        answer=Answers.objects.get(pk=answerid)
+        answer=AnswerModel.objects.get(pk=answerid)
         user=request.user
         Comment.objects.create(
             answer=answer,

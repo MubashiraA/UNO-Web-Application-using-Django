@@ -1,9 +1,10 @@
 from distutils.log import error
+from itertools import count
 from msilib.schema import Class
 from multiprocessing import context
 from re import template
 from django.shortcuts import render,redirect
-from django.views.generic import TemplateView,View
+from django.views.generic import *
 #from myapp.models import UserRegisterModel
 from myapp.forms import *
 from django.contrib.auth.models import User
@@ -25,17 +26,21 @@ from django.http import HttpResponse, JsonResponse
 class index(View):
 	template_name='index.html'
 	def get(self,request):
-		qn_data=QuestionModel.objects.all()
+		qn_data=QuestionModel.objects.all().order_by('-created_on')
 		context={'data':qn_data}
-		
 		return render(request,self.template_name,context)
     
 
 def contact(request):
     return render(request,'contact.html')
 
-def adminindex(request):
-    return render(request,'Adminindex.html')
+class AdminIndex(View):
+	template_name='AdminIndex.html'
+	def get(self,request):
+		user=User.objects.all().count()
+		pending=AnswerModel.objects.filter(approval_status='pending').count()
+		qns=QuestionModel.objects.all().count()
+		return render(request,self.template_name, {'pending':pending , 'user':user-1 , 'qns':qns})
 
 class RegisterView(View):
 	template_name='register.html'
@@ -197,7 +202,7 @@ class AnswerView(View):
 class QuestionList(View):
 	template_name='qnlist.html'
 	def get(self,request):
-		qn_data=QuestionModel.objects.all()
+		qn_data=QuestionModel.objects.all().order_by('-created_on')
 		context={'data':qn_data}
 		return render(request,self.template_name,context)
 
@@ -221,6 +226,19 @@ class CategoryList(View):
 		data=CategoryModel.objects.get(id=pk)
 		answerdata=QuestionModel.objects.filter(group=data)
 		return render(request,self.template_name,{'answerdata':answerdata,'data':data})
+
+class PendingList(View):
+	template_name='pendinglist.html'
+	def get(self,request):
+		data=AnswerModel.objects.filter(approval_status='pending')
+		return render(request,self.template_name,{'data':data})
+
+class updatependinganswer(UpdateView):
+	template_name='pendingupdate.html'
+	model=AnswerModel
+	fields=["approval_status"]
+	success_url='/pendinglist/'
+
 # chat
 @login_required
 def chatroom(request, pk:int):
@@ -268,7 +286,7 @@ def save_upvote(request):
         user=request.user
         check=UpVote.objects.filter(answer=answer,user=user).count()
         opp=DownVote.objects.filter(answer=answer,user=user).count()
-        if opp>0 or check > 0:
+        if opp > 0 or check > 0:
             return JsonResponse({'bool':False})
         else:
             UpVote.objects.create(
@@ -285,7 +303,7 @@ def save_downvote(request):
         user=request.user
         check=DownVote.objects.filter(answer=answer,user=user).count()
         opp=UpVote.objects.filter(answer=answer,user=user).count()
-        if opp>0 or check > 0:
+        if opp > 0 or check > 0:
             return JsonResponse({'bool':False})
         else:
             DownVote.objects.create(

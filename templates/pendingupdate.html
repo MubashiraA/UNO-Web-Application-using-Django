@@ -1,0 +1,33 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Pending list</title>
+  <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.4.1/css/mdb.min.css">
+    <link rel="stylesheet" href='{% static "style.css" %}'>
+
+<body style="background-color: antiquewhite;">
+    <main>
+        <!--MDB Cards-->
+    <form method="post">
+        {% csrf_token %}
+        <div class="container">
+            <h3><b>Pending Update</b></h3>
+            <div class="justify-content-md-center">
+                    <div class="card mt-2">
+                        <div class="card-body">
+                            <h4 class="card-body">{{form.as_p}}</h4>
+                            <button>Update Status</button>                           
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </form>
+    </main>
+</body>
+</html>
+
+

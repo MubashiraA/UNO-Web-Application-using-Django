@@ -38,31 +38,18 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <nav class="mx-auto">
-            <div class="search-bar">
-              <form class="search">
-                <input type="search" class="search__input" name="search" placeholder="Discover news, articles and more"
-                  onload="equalWidth()" required>
-                <span class="fa fa-search search__icon"></span>
-              </form>
-            </div>
+            
           </nav>
           <ul class="navbar-nav">
             <li class="nav-item @@home__active">
-              <a class="nav-link" href="index.html">Home</a>
-            </li>
-            <li class="nav-item dropdown @@pages__active">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false">
-                More <span class="fa fa-angle-down"></span>
-              </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item @@b__active" href="beauty.html">Beauty</a>
-                <a class="dropdown-item @@fa__active" href="fashion.html">Fashion & Style</a>
-              </div>
+              <a class="nav-link" href="/">Home</a>
             </li>
             <li class="nav-item active">
-              <a class="nav-link" href="contact.html">Contact</a>
-            </li>
+              <a class="nav-link" href=" ">Welcome , {{request.user}}</a>
+          </li>
+          <li class="nav-item active">
+              <a class="nav-link" href="{% url 'logout'%}">Logout</a>
+          </li>
           </ul>
         </div>
         <!-- toggle switch for light and dark theme -->
@@ -104,6 +91,7 @@
                 <div class="custom-dropdown">
                   <span class="fa fa-angle-down custom-dropdown-arrow"></span>
                   <select name="group">
+                    <option>Select option</option>
                     {% for category in categories %}
                     <option value="{{category.id}}">{{category}}</option>
                     {% endfor %}

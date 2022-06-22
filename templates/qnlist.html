@@ -12,7 +12,49 @@
 <body style="background-color: antiquewhite;">
     <main>
         <!--MDB Cards-->
-        <div class="container">
+        <div class="w3l-homeblock2 py-5" style="background-color: rgb(228, 233, 233);">
+        <div class="container py-lg-5 py-md-4">
+            <!-- block -->
+            <h3 class="section-title-left mb-4">Questions</h3>
+            <div class="row justify-content-center">
+                <div class="col-6 mb-3 item">
+                    {% for i in data %}
+                    <div class="card mb-3">
+                        <div class="card-header p-0 position-relative">
+                            {% if i.pic %}
+                                <img class="card-img-bottom d-block radius-image-full" src="{{i.pic.url}}"
+                                    alt="Card image cap" height="300px" width="300px">
+                            
+                            {% endif %}
+                        </div>
+                        <div class="card-body blog-details">
+                            <span class="label-blue">{{i.group}}</span>
+                            <h5>{{i.qn}}</h5>
+                            <p>
+                                <a href="{% url 'addans' i.id %}" class="text-blue">Add Answer</a>
+                                <a href="{% url 'answers' i.id %}" class="text-blue float-right"> View Answers</a>
+                            </p>
+
+                            <div class="author align-items-center mt-3 mb-1">
+                                <img src="{% static 'assets\images\avatar.png '%}" alt="" class="img-fluid rounded-circle" />
+                                <ul class="blog-meta">
+                                    <li>
+                                        <a href="{% url 'chatroom' i.user.id %}">{{i.user}}</a>
+                                    </li>
+                                    <li class="meta-item blog-lesson">
+                                        <span class="meta-value"> {{i.created_on.date}}</span>. <span
+                                            class="meta-value ml-2"><span class="fa fa-clock-o"></span>{{i.created_on.time}}</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+        <!-- <div class="container">
             <div class="justify-content-md-center">
                 {% for i in data %}  
                 
@@ -25,7 +67,6 @@
                         {% endif %}
                         <div class="card-body">
                             <h4 class="card-title">Q : {{i.qn}}</h4>
-                            <!-- <h5 class="card-text">{{i.answer}}</h5> -->
                             <button class="btn btn-success float-left"><a href="{% url 'addans' i.id %}" class="text-white">Add Answer</a></button> 
                             <button class="btn btn-success float-right"><a href="{% url 'answers' i.id %}" class="text-white"> View Answers</a></button>
                         </div>
@@ -33,7 +74,7 @@
                 </div>
                 {% endfor %}  
             </div>
-        </div>
+        </div> -->
     </main>
 </body>
 </html>

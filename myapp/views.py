@@ -1,3 +1,4 @@
+from distutils.log import error
 from msilib.schema import Class
 from multiprocessing import context
 from re import template
@@ -17,7 +18,8 @@ from django.contrib import messages
 from .models import User, Message
 from django.db.models import Q
 import json
-from django.http import JsonResponse
+from django.contrib import messages
+from django.http import HttpResponse, JsonResponse
 
 # Create your views here.
 class index(View):
@@ -105,7 +107,10 @@ class UserLogin(View):
 				return redirect('index')
 			if user.is_staff == False and user.is_superuser == False:
 				return redirect ('index')
+			
 		else:
+			messages.error(request,'username or password not correct')
+            # return redirect('login')
 			form=AuthenticationForm()
 			context={'form':form}
 			return render(request,'login.html',context)
@@ -126,7 +131,7 @@ class CategoryView(View):
 			name=name,
 			)
 		user.save()
-		return redirect('addcategory')
+		return redirect('dash')
 
 class QuestionView(View):
 	template_name ='addqn.html'
@@ -196,11 +201,25 @@ class QuestionList(View):
 		context={'data':qn_data}
 		return render(request,self.template_name,context)
 
+class UserList(View):
+	template_name='userlist.html'
+	def get(self,request):
+		user=User.objects.all()
+		context={'data':user}
+		return render(request,self.template_name,context)
+
 class Answers(View):
 	template_name='answers.html'
 	def get(self,request,pk):
 		data=QuestionModel.objects.get(id=pk)
 		answerdata=AnswerModel.objects.filter(qn=data)
+		return render(request,self.template_name,{'answerdata':answerdata,'data':data})
+
+class CategoryList(View):
+	template_name='categorylist.html'
+	def get(self,request,pk):
+		data=CategoryModel.objects.get(id=pk)
+		answerdata=QuestionModel.objects.filter(group=data)
 		return render(request,self.template_name,{'answerdata':answerdata,'data':data})
 # chat
 @login_required

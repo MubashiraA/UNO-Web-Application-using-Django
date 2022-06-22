@@ -19,5 +19,9 @@ urlpatterns = [
     path('save-upvote',save_upvote,name='save-upvote'),
     path('save-downvote',save_downvote,name='save-downvote'),
     path('save-comment',save_comment,name='save-comment'),
-    
+    path('userlist/', UserList.as_view(), name='userlist'),
+    path('categorylist/<int:pk>', CategoryList.as_view(), name='categorylist'),
+
+
+
 ]

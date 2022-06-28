@@ -21,13 +21,15 @@ from django.db.models import Q
 import json
 from django.contrib import messages
 from django.http import HttpResponse, JsonResponse
+from django.db.models import Count
 
 # Create your views here.
 class index(View):
 	template_name='index.html'
 	def get(self,request):
 		qn_data=QuestionModel.objects.all().order_by('-created_on')
-		context={'data':qn_data}
+		trending=AnswerModel.objects.annotate(upvote_count=Count('up_vote')).order_by("upvote_count")
+		context={'data':qn_data, 'trending':trending}
 		return render(request,self.template_name,context)
     
 
@@ -185,17 +187,11 @@ class AnswerView(View):
 		user=request.user
 		answer=request.POST.get('answer')
 		pic=request.FILES.get('pic')
-		# approval_status=request.POST.get('approval_status')
-		# up_vote=request.POST.get('up_vote')
-		# down_vote=request.POST.get('down_vote')
 		AnswerModel.objects.create(
 			user=user,
 			qn=qn_select,
 			answer=answer,
 			pic=pic,
-			# approval_status=approval_status,
-			# up_vote=up_vote,
-			# down_vote=down_vote
 			)
 		return redirect('index')
 

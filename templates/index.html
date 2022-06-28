@@ -52,9 +52,6 @@
                         <li class="nav-item active">
                             <a class="nav-link" href=" ">Home</a>
                         </li>
-                        <!--<li class="nav-item @@contact__active">
-						<a class="nav-link" href="contact.html">Contact</a>
-					</li>-->
                         {% if user.is_authenticated %}
                         <li class="nav-item active">
                             <a class="nav-link" href=" ">Welcome , {{request.user}}</a>
@@ -73,18 +70,6 @@
                             <a class="nav-link" href="login/">Login</a>
                         </li>
                         {% endif %}
-
-                        <!-- <li class="nav-item dropdown @@pages__active">
-						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-							data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							More <span class="fa fa-angle-down"></span>
-						</a>
-						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-							<a class="dropdown-item @@b__active" href="beauty.html">Beauty</a>
-							<a class="dropdown-item @@fa__active" href="fashion.html">Fashion & Style</a>
-						</div>
-					</li> -->
-
                     </ul>
                 </div>
                 <!-- toggle switch for light and dark theme -->
@@ -112,7 +97,7 @@
         <div class="container py-md-4">
             <div class="grids-area-hny main-cont-wthree-fea row">
                 <div class="col-lg-3 col-6 grids-feature">
-                    <a href="beauty.html">
+                    <a href="{% url 'categorylist' 3 %}">
                         <div class="area-box">
                             <span class="fa fa-globe"></span>
                             <h4 class="title-head">Travel</h4>
@@ -120,7 +105,7 @@
                     </a>
                 </div>
                 <div class="col-lg-3 col-6 grids-feature">
-                    <a href="fashion.html">
+                    <a href="{% url 'categorylist' 1 %}">
                         <div class="area-box">
                             <span class="fa fa-book"></span>
                             <h4 class="title-head">Education</h4>
@@ -128,15 +113,15 @@
                     </a>
                 </div>
                 <div class="col-lg-3 col-6 grids-feature mt-lg-0 mt-md-4 mt-3">
-                    <a href="#food">
+                    <a href="{% url 'categorylist' 2 %}">
                         <div class="area-box">
                             <span class="fa fa-cutlery"></span>
-                            <h4 class="title-head">Food and wellness</h4>
+                            <h4 class="title-head">Food</h4>
                         </div>
                     </a>
                 </div>
                 <div class="col-lg-3 col-6 grids-feature mt-lg-0 mt-md-4 mt-3">
-                    <a href="#lifsetyle">
+                    <a href="{% url 'categorylist' 4 %}">
                         <div class="area-box">
                             <span class="fa fa-pie-chart"></span>
                             <h4 class="title-head">Lifestyle</h4>
@@ -195,63 +180,35 @@
         <div class="container-fluid px-sm-5 py-lg-5 py-md-4">
             <!-- block -->
             <h3 class="section-title-left mb-4"> Trending Now</h3>
+            {% for i in trending %}
             <div class="row">
                 <div class="col-lg-6">
                     <div class="bg-clr-white hover-box">
                         <div class="row">
                             <div class="col-sm-6 position-relative">
                                 <a href="#blog-single.html">
+                                    {% if i.pic %}
                                     <img class="card-img-bottom d-block radius-image-full"
-                                        src="static/assets/images/trending1.jpg" alt="Card image cap">
+                                        src="{{i.pic.url}}" alt="Card image cap">
+                                    {% endif %}
+
                                 </a>
                             </div>
                             <div class="col-sm-6 card-body blog-details align-self">
-                                <span class="label-blue">Sports</span>
-                                <a href="#blog-single.html" class="blog-desc">Playing footbal with your feet is one
-                                    thing.
-                                </a>
-                                <p>Lorem ipsum dolor sit amet consectetur ipsum adipisicing elit. Quis
-                                    vitae sit.</p>
+                                <span class="label-blue">{{i.group}}</span>
+                                <h5>{{i.qn}}</h5>
+                                <p><a href="{% url 'addans' i.id %}" class="text-blue">Add Answer</a>
+                                    <a href="{% url 'answers' i.id %}" class="text-blue float-right"> View Answers</a>
+                                </p>
                                 <div class="author align-items-center mt-3">
-                                    <img src="static/assets/images/a2.jpg" alt="" class="img-fluid rounded-circle" />
+                                    <img src="{% static 'assets\images\avatar.png '%}" alt="" class="img-fluid rounded-circle" />
                                     <ul class="blog-meta">
                                         <li>
-                                            <a href="author.html">Charlotte mia</a> </a>
+                                            <a href="{% url 'chatroom' i.user.id %}">{{i.user}}</a> </a>
                                         </li>
                                         <li class="meta-item blog-lesson">
-                                            <span class="meta-value"> July 13, 2020 </span>. <span
-                                                class="meta-value ml-2"><span class="fa fa-clock-o"></span> 1 min</span>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6 mt-lg-0 mt-4">
-                    <div class="bg-clr-white hover-box">
-                        <div class="row">
-                            <div class="col-sm-6 position-relative">
-                                <a href="#blog-single.html">
-                                    <img class="card-img-bottom d-block radius-image-full"
-                                        src="static/assets/images/trending2.jpg" alt="Card image cap">
-                                </a>
-                            </div>
-                            <div class="col-sm-6 card-body blog-details align-self">
-                                <span class="label-blue">Fitness</span>
-                                <a href="#blog-single.html" class="blog-desc">Experience the state of the art fitness!
-                                    Fitness on Track </a>
-                                <p>Lorem ipsum dolor sit amet consectetur ipsum adipisicing elit. Quis
-                                    vitae sit.</p>
-                                <div class="author align-items-center mt-3">
-                                    <img src="static/assets/images/a3.jpg" alt="" class="img-fluid rounded-circle" />
-                                    <ul class="blog-meta">
-                                        <li>
-                                            <a href="author.html">ELizabeth</a> </a>
-                                        </li>
-                                        <li class="meta-item blog-lesson">
-                                            <span class="meta-value"> July 13, 2020 </span>. <span
-                                                class="meta-value ml-2"><span class="fa fa-clock-o"></span> 1 min</span>
+                                            <span class="meta-value">{{i.created_on.date}} </span>. <span
+                                                class="meta-value ml-2"><span class="fa fa-clock-o"></span>{{i.created_on.time}}</span>
                                         </li>
                                     </ul>
                                 </div>
@@ -260,6 +217,7 @@
                     </div>
                 </div>
             </div>
+            {% endfor %}
         </div>
     </div>
     

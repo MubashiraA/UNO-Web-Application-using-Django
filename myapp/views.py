@@ -1,3 +1,4 @@
+from ast import Pass
 from distutils.log import error
 from itertools import count
 from msilib.schema import Class
@@ -213,7 +214,7 @@ class Answers(View):
 	template_name='answers.html'
 	def get(self,request,pk):
 		data=QuestionModel.objects.get(id=pk)
-		answerdata=AnswerModel.objects.filter(qn=data)
+		answerdata=AnswerModel.objects.filter(qn=data,approval_status='approval')
 		return render(request,self.template_name,{'answerdata':answerdata,'data':data})
 
 class CategoryList(View):
@@ -320,3 +321,12 @@ def save_comment(request):
             user=user
         )
         return JsonResponse({'bool':True})
+
+def search(request):
+	if request.method=='POST':
+		search=request.POST.get('search')
+		status=QuestionModel.objects.filter(qn__contains=search)
+		if status==None:
+			Pass
+		else:
+			return render(request,'index.html',{'data':status})

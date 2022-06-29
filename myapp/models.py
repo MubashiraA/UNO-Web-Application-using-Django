@@ -37,7 +37,6 @@ class AnswerModel(models.Model):
 	approval_status=models.CharField(max_length=30,choices=Approval,default='pending')
 	status=models.BooleanField(default=True)
 	created_on=models.DateTimeField(auto_now=True)
-	updated_on=models.DateTimeField(auto_now=True)
 	up_vote=models.IntegerField(default=0)
 	down_vote=models.IntegerField(default=0)
 

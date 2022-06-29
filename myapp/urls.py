@@ -23,5 +23,5 @@ urlpatterns = [
     path('categorylist/<int:pk>', CategoryList.as_view(), name='categorylist'),
     path('pendinglist/', PendingList.as_view(), name='pendinglist'),
     path('pending/update/<int:pk>', updatependinganswer.as_view(), name='pendingupdate'),
-
+    path('search/',search,name='search'),
 ]

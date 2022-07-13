@@ -29,7 +29,7 @@ class index(View):
 	template_name='index.html'
 	def get(self,request):
 		qn_data=QuestionModel.objects.all().order_by('-created_on')
-		trending=AnswerModel.objects.annotate(upvote_count=Count('up_vote')).order_by("upvote_count")
+		trending=AnswerModel.objects.annotate(upvote_count=Count('upvote')).order_by("-upvote_count")
 		context={'data':qn_data, 'trending':trending}
 		return render(request,self.template_name,context)
     
@@ -214,7 +214,7 @@ class Answers(View):
 	template_name='answers.html'
 	def get(self,request,pk):
 		data=QuestionModel.objects.get(id=pk)
-		answerdata=AnswerModel.objects.filter(qn=data,approval_status='approval')
+		answerdata=AnswerModel.objects.filter(qn=data,approval_status='approval').annotate(upvote_count=Count('upvote')).order_by("-upvote_count")
 		return render(request,self.template_name,{'answerdata':answerdata,'data':data})
 
 class CategoryList(View):
